@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<script src="./State.js"></script>
+	<script>
+		const inputs = [1, 0, 0, 1, 1, 1, 0, 1]
+		const sum = [0, 0]
+
+		const update = i => s => {
+			sum[i] ++
+			return sum
+		}
+
+		const result =
+			State.sequence(inputs.map(i => State.modify(update(i))))
+				.flatMap(_ => State.get())
+				.map(s => ({ 0: s[0], 1: s[1] }))
+				.run(sum)
+
+		console.log(result)
+	</script>
+</body>
+</html>
